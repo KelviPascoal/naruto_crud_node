@@ -1,24 +1,22 @@
-import { getRepository } from "typeorm";
-import { Village } from "../infra/models/Village";
-
-interface Request {
-  name: string;
-  country: string;
-}
+import { Village } from "../infra/typeorm/models/Village";
+import { VillageRepositories } from "../infra/typeorm/repositories/VillageRepositories";
+import { IVillagesRepository } from "../repositories/IVillagesRepository";
+import { IRequestCreateVillage } from "../types/IRequestCreateVillage";
 
 export class CreateVillageService {
-  async execute(request: Request): Promise<Village> {
-      
-    const villageRepository = getRepository(Village);
+  constructor(
+    private villageRepository: IVillagesRepository,
+  ) {}
 
-    const villageExist = await villageRepository.findOne({where: {name: request.name}});
 
+  async execute({ name, country }: IRequestCreateVillage): Promise<Village> {
+    const villageRepository = new VillageRepositories();
+    const villageExist = await villageRepository.findByName(name);
     if (villageExist) {
-      throw new Error("this village not exist.");
+      throw new Error('village name is already being used');
     }
-    
-    const villageCreated = villageRepository.create(request);
-    await villageRepository.save(villageCreated);
+
+    const villageCreated = await villageRepository.create({ name, country });
 
     return villageCreated;
   }

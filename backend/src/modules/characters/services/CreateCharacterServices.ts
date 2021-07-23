@@ -1,4 +1,4 @@
-import { Character } from "../infra/models/Character";
+import { Character } from "../infra/typeorm/models/Character";
 import { getRepository } from "typeorm";
 
 interface Request {

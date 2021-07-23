@@ -13,10 +13,8 @@ villageRoutes.get("/", async (req, res) => {
 
 villageRoutes.post("/", async (req, res) => {
   try {
-    const { name, country } = req.body;
-
     const createVillage = new CreateVillageService();
-    const village = await createVillage.execute({ name, country });
+    const village = await createVillage.execute(req.body);
     return res.status(200).json(village);
   } catch (err) {
     return res.status(400).json(err.message);

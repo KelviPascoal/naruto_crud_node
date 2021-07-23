@@ -6,7 +6,7 @@
     "password": "postgres",
     "database": "naruto_data",
     "entities": [
-        "./src/modules/**/infra/models/*.ts"
+        "./src/modules/**/infra/typeorm/models/*.ts"
     ],
     "migrations": [
         "./src/shared/infra/typeorm/database/migrations/*.ts"

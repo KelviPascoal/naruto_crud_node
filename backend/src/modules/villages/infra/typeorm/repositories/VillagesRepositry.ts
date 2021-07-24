@@ -1,4 +1,4 @@
-import { IVillagesRepository } from "@modules/vilages/repositories/IVillagesRepository";
+import { IVillagesRepository } from "@modules/villages/repositories/IVillagesRepository";
 import { getRepository, Repository } from "typeorm";
 import { IRequestCreateVillage } from "../../../types/IRequestCreateVillage";
 import { Village } from "../models/Village";

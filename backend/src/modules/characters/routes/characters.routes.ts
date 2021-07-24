@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getRepository } from "typeorm";
-import { Character } from "../infra/models/Character";
+import { Character } from "../infra/typeorm/models/Character";
 import CreateCharacterServices from "../services/CreateCharacterServices";
 import { UpdateCharacterService } from "../services/UpdateCharacterService";
 

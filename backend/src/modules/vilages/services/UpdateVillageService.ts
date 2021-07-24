@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Village } from "../infra/models/Village";
+import { Village } from "../infra/typeorm/models/Village";
 
 interface Request {
     id: number;

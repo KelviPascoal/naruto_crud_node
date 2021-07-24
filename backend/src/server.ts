@@ -1,6 +1,8 @@
 import express from 'express';
 import { routes } from './shared/http/routes';
 import './shared/infra/typeorm/database';
+import './shared/container';
+
 
 const app = express();
 const PORT = 3333;

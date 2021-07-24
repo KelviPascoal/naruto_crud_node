@@ -1,24 +1,24 @@
-import { getRepository } from "typeorm";
-import { Village } from "../infra/models/Village";
+import { Village } from "../infra/typeorm/models/Village";
+import { VillagesRepository } from "../infra/typeorm/repositories/VillagesRepositry";
+import { IVillagesRepository } from "../repositories/IVillagesRepository";
+import { IRequestCreateVillage } from "../types/IRequestCreateVillage";
+import { inject, injectable} from 'tsyringe'
 
-interface Request {
-  name: string;
-  country: string;
-}
-
+@injectable()
 export class CreateVillageService {
-  async execute(request: Request): Promise<Village> {
-      
-    const villageRepository = getRepository(Village);
+  constructor(
+    @inject('VillagesRepository')
+    private villageRepository: IVillagesRepository,
+  ) {}
 
-    const villageExist = await villageRepository.findOne({where: {name: request.name}});
 
+  async execute({ name, country }: IRequestCreateVillage): Promise<Village | undefined> {
+    const villageExist = await this.villageRepository.findByName(name);
     if (villageExist) {
-      throw new Error("this village not exist.");
+      throw new Error('village name is already being used');
     }
-    
-    const villageCreated = villageRepository.create(request);
-    await villageRepository.save(villageCreated);
+
+    const villageCreated = await this.villageRepository.create({ name, country });
 
     return villageCreated;
   }

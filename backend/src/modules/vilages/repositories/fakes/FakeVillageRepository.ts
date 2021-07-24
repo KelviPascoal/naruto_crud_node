@@ -1,7 +1,14 @@
 import { IRequestCreateVillage } from "@modules/vilages/types/IRequestCreateVillage";
 import { Village } from "../../infra/typeorm/models/Village";
+import { IVillagesRepository } from "../IVillagesRepository";
 
-export class FakeVillageRepositories {
+export class FakeVillageRepositories implements IVillagesRepository {
+  find(): Promise<Village[]> {
+    throw new Error("Method not implemented.");
+  }
+  update(data: IRequestCreateVillage): Promise<Village | undefined> {
+    throw new Error("Method not implemented.");
+  }
   private villages: Village[] = [];
 
   async create({ name, country }: IRequestCreateVillage): Promise<Village> {
@@ -10,14 +17,12 @@ export class FakeVillageRepositories {
     this.villages.push(village);
     return village;
   }
-  async find() {}
 
     async findByName(name: string): Promise<Village | undefined> {
       const villageFound = this.villages.find(village => village.name == name);
       return villageFound;
     }
 
-  async update() {}
 
   async delete() {}
 }

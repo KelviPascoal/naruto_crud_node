@@ -4,16 +4,18 @@ import { IRequestCreateVillage } from "../types/IRequestCreateVillage";
 
 
 
-export class CreateVillageController {
-    async execute({ name, country }: IRequestCreateVillage): Promise<Village> {
+export class VillageController {
+    constructor (
+        private createServices: CreateVillageService,
+    ) {}
+
+    async execute({ name, country }: IRequestCreateVillage): Promise<Village | undefined> {
 
     if (!name || !country) {
         throw new Error();
     }
-
-    const createVillageService = new CreateVillageService()
     
-    const villageCreated = await createVillageService.execute({ name, country })
+    const villageCreated = await this.createServices.execute({ name, country })
 
     return villageCreated;
     }

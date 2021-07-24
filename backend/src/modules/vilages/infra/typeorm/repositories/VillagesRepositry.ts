@@ -1,9 +1,15 @@
 import { IVillagesRepository } from "@modules/vilages/repositories/IVillagesRepository";
-import { getRepository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { IRequestCreateVillage } from "../../../types/IRequestCreateVillage";
 import { Village } from "../models/Village";
 
-export class VillageRepositories implements IVillagesRepository {
+export class VillagesRepository    implements IVillagesRepository {
+  private ormRepository: Repository<Village>;
+
+  constructor() {
+    this.ormRepository = getRepository(Village);
+  }
+
   find(): Promise<Village[]> {
     throw new Error("Method not implemented.");
   }
@@ -11,16 +17,14 @@ export class VillageRepositories implements IVillagesRepository {
     throw new Error("Method not implemented.");
   }
   async create({ name, country }: IRequestCreateVillage): Promise<Village> {
-    const villageRepository = getRepository(Village);
-    const villageCreated = villageRepository.create({name, country});
-    await villageRepository.save(villageCreated);
+    const villageCreated = this.ormRepository.create({name, country});
+    await this.ormRepository.save(villageCreated);
 
     return villageCreated;
   }
 
   async findByName(name: string): Promise<Village | undefined> {
-    const villageRepository = getRepository(Village);
-    const villageFound = await villageRepository.findOne({where: {name: name}});
+    const villageFound = await this.ormRepository.findOne({where: {name: name}});
     return villageFound;
   }
 

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { container } from "tsyringe";
 import { CreateVillageService } from "../services/CreateVillageService";
 import { DeleteVillageService } from "../services/DeleteVillageService";
 import { FindVillageService } from "../services/FindVillageServices";
@@ -7,13 +8,13 @@ export const villageRoutes = Router();
 
 villageRoutes.get("/", async (req, res) => {
   const findVillageService = new FindVillageService();
-  const village = await findVillageService.execute();
-  return res.status(200).json(village);
+  // const village = await findVillageService.execute();
+  // return res.status(200).json(village);
 });
 
 villageRoutes.post("/", async (req, res) => {
   try {
-    const createVillage = new CreateVillageService();
+    const createVillage = container.resolve(CreateVillageService);
     const village = await createVillage.execute(req.body);
     return res.status(200).json(village);
   } catch (err) {

@@ -4,6 +4,7 @@ import { IRequestCreateVillage } from "../types/IRequestCreateVillage";
 export interface IVillagesRepository {
     create(data: IRequestCreateVillage): Promise<Village | undefined>
     find(): Promise<Village[]>
+    findById(id: number): Promise<Village | undefined>
     findByName(name: string): Promise<Village | undefined>
     update(data: IRequestCreateVillage): Promise<Village | undefined>
     delete(id: number): Promise<void>

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Village } from '../../../../vilages/infra/typeorm/models/Village';
+import { Village } from '../../../../villages/infra/typeorm/models/Village';
 
 @Entity('characters')
 class Character {

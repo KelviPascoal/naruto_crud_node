@@ -1,17 +1,22 @@
-import { IVillagesRepository } from "@modules/vilages/repositories/IVillagesRepository";
+import { IVillagesRepository } from "@modules/villages/repositories/IVillagesRepository";
 import { getRepository, Repository } from "typeorm";
 import { IRequestCreateVillage } from "../../../types/IRequestCreateVillage";
 import { Village } from "../models/Village";
 
-export class VillagesRepository    implements IVillagesRepository {
+export class VillagesRepository implements IVillagesRepository {
   private ormRepository: Repository<Village>;
 
   constructor() {
     this.ormRepository = getRepository(Village);
   }
+  async findById(id: number): Promise<Village | undefined> {
+    const villageFound = await this.ormRepository.findOne({where: {id: id}});
+    return villageFound;
+  }
 
-  find(): Promise<Village[]> {
-    throw new Error("Method not implemented.");
+  async find(): Promise<Village[] | undefined> {
+    const villages = await this.ormRepository.find();
+    return villages;
   }
   update(data: IRequestCreateVillage): Promise<Village | undefined> {
     throw new Error("Method not implemented.");
@@ -28,8 +33,5 @@ export class VillagesRepository    implements IVillagesRepository {
     return villageFound;
   }
 
-
-  // async update() {}
-
-  async delete() {}
+  async delete(id: number): Promise<void> {}
 }

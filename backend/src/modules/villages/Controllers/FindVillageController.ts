@@ -16,9 +16,7 @@ export class FindVillageController {
   }: IRequest): Promise<Village[] | Village | undefined> {
     if (!name && !id) {
       const findVillageService = container.resolve(FindVillageService);
-
       const villages = await findVillageService.execute();
-
       if (!villages) {
         throw new Error('nenhuma vila foi cadastrada');
       }

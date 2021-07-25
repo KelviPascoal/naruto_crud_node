@@ -12,7 +12,6 @@ describe("teste do CreateVillageService", () => {
       name: "ES",
       country: "Brasil",
     });
-console.log(villageCreated);
     expect(villageCreated).toHaveProperty("id");
   });
 

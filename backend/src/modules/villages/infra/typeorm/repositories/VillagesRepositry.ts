@@ -14,7 +14,7 @@ export class VillagesRepository implements IVillagesRepository {
     return villageFound;
   }
 
-  async find(): Promise<Village[]> {
+  async find(): Promise<Village[] | undefined> {
     const villages = await this.ormRepository.find();
     return villages;
   }
@@ -33,8 +33,5 @@ export class VillagesRepository implements IVillagesRepository {
     return villageFound;
   }
 
-
-  // async update() {}
-
-  async delete() {}
+  async delete(id: number): Promise<void> {}
 }

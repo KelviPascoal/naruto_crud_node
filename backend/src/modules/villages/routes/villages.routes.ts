@@ -13,6 +13,7 @@ interface IRequest {
 export const villageRoutes = Router();
 
 villageRoutes.get("/", async (req, res) => {
+try {
   const { name, id }: IRequest = req.query;
 
   const findVillageController = new FindVillageController();
@@ -21,10 +22,14 @@ villageRoutes.get("/", async (req, res) => {
     id: Number(id),
   });
   return res.status(200).json(villageOrVillagesFound);
+} catch(err) {
+  return res.status(400).json({message: err.messae})
+}
 });
 
 villageRoutes.post("/", async (req, res) => {
   try {
+    
     const createVillage = container.resolve(CreateVillageService);
     const village = await createVillage.execute(req.body);
     return res.status(200).json(village);

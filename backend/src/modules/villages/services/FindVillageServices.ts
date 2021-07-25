@@ -9,7 +9,7 @@ export class FindVillageService {
     private villageRepository: IVillagesRepository
   ) {}
 
-  async execute(): Promise<Village[]> {
+  async execute(): Promise<Village[] | undefined> {
     const villages = await this.villageRepository.find();
     if (!villages) {
       throw new Error('nenhuma vila foi encontrada')

@@ -1,10 +1,7 @@
-import { Village } from "../infra/typeorm/models/Village";
 import { FakeVillageRepositories } from "../repositories/fakes/FakeVillageRepository";
-import { IRequestCreateVillage } from "../types/IRequestCreateVillage";
 import { CreateVillageService } from "./CreateVillageService";
-import { IVillagesRepository } from "@modules/villages/repositories/IVillagesRepository";
 
-describe("testar service de soma", () => {
+describe("teste do CreateVillageService", () => {
   it("testing the work of createVillageService", async () => {
     const fakeVillageRepositories = new FakeVillageRepositories();
     const createVillageService = new CreateVillageService(

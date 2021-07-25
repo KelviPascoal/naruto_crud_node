@@ -1,5 +1,4 @@
 import { Village } from "../infra/typeorm/models/Village";
-import { VillagesRepository } from "../infra/typeorm/repositories/VillagesRepositry";
 import { IVillagesRepository } from "../repositories/IVillagesRepository";
 import { IRequestCreateVillage } from "../types/IRequestCreateVillage";
 import { inject, injectable} from 'tsyringe'

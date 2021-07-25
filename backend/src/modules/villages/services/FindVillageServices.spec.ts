@@ -13,14 +13,14 @@ describe('teste do FindVillageService', () => {
           fakeVillageRepositories
         );
     
-        const villageCreated = await createVillageService.execute({
-          name: "ES",
-          country: "Brasil",
-        });
+        // const villageCreated = await createVillageService.execute({
+        //   name: "ES",
+        //   country: "Brasil",
+        // });
 
 
         const villagesFound = await findVillageService.execute();
-        expect(villagesFound[0]).toBe(villageCreated)
+        expect(villagesFound[0].name).toBe('folha')
 
 
     })

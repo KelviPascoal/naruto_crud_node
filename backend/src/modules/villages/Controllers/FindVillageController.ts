@@ -17,8 +17,12 @@ export class FindVillageController {
     if (!name && !id) {
       const findVillageService = container.resolve(FindVillageService);
 
-      const village = await findVillageService.execute();
-      return village;
+      const villages = await findVillageService.execute();
+
+      if (!villages) {
+        throw new Error('nenhuma vila foi cadastrada');
+      }
+      return villages;
     }
 
     if (name && !id) {
@@ -39,3 +43,4 @@ export class FindVillageController {
     }
   }
 }
+      

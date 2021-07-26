@@ -1,8 +1,8 @@
 import { container } from "tsyringe";
 import { Village } from "../infra/typeorm/models/Village";
 import { FindVillageService } from "../services/FindVillageServices";
-import { FindVillageServiceById } from "../services/FindVillageServicesById";
-import { FindVillageServiceByName } from "../services/FindVillageServiceByName";
+import { FindVillageServiceById } from "../services/FindByIDVillageService";
+import { FindVillageServiceByName } from "../services/FindByNameVillageService";
 
 interface IRequest {
   id?: number;

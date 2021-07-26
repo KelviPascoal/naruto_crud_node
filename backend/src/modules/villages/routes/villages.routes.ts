@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { container } from "tsyringe";
+import { CreateVillageController } from "../Controllers/CreateVillageController";
 import { FindVillageController } from "../Controllers/FindVillageController";
-import { CreateVillageService } from "../services/CreateVillageService";
 import { DeleteVillageService } from "../services/DeleteVillageService";
 import { UpdateVillageService } from "../services/UpdateVillageService";
 
@@ -29,10 +29,10 @@ try {
 
 villageRoutes.post("/", async (req, res) => {
   try {
-    
-    const createVillage = container.resolve(CreateVillageService);
-    const village = await createVillage.execute(req.body);
-    return res.status(200).json(village);
+    const createVillageController =  new CreateVillageController()
+    const {name, country} = req.body;
+    const villageCreated = await createVillageController.execute({name, country}) 
+    return res.status(200).json(villageCreated);
   } catch (err) {
     return res.status(400).json(err.message);
   }
@@ -49,10 +49,14 @@ villageRoutes.put("/", async (req, res) => {
   }
 });
 
-villageRoutes.delete("/", async (req, res) => {
-  const villageService = new DeleteVillageService();
-  const id = req.body.id;
+villageRoutes.delete("/:id", async (req, res) => {
+  try {
+  const villageService = container.resolve(DeleteVillageService);
+  const idString = req.params.id;
+  const id = Number(idString)
   await villageService.execute(id);
-
   return res.status(204).json({ message: "vila deletada." });
+  } catch(err) {
+    res.status(400).json({error: err.message})
+  }
 });

@@ -20,12 +20,17 @@ describe("teste do CreateVillageService", () => {
     const createVillageService = new CreateVillageService(
       fakeVillageRepositories
     );
-
     await createVillageService.execute({
       name: "ES",
       country: "Brasil",
     });
 
+    const testerr = await createVillageService.execute({
+      name: "ES",
+      country: "Brasil",
+    });
+    console.log(testerr);
+    
     expect(
       createVillageService.execute({
         name: "ES",

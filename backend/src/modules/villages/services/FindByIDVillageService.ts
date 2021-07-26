@@ -9,8 +9,11 @@ export class FindVillageServiceById {
     private villageRepository: IVillagesRepository
   ) {}
 
-  async execute(id: number): Promise<Village | undefined> {
-    const villages = await this.villageRepository.findById(id);
-    return villages;
+  async execute(id: number): Promise<Village> {
+    const village = await this.villageRepository.findById(id);
+    if (!village) {
+      throw new Error('vila não encontrada.')
+    }
+    return village;
   }
 }

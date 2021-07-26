@@ -33,5 +33,7 @@ export class VillagesRepository implements IVillagesRepository {
     return villageFound;
   }
 
-  async delete(id: number): Promise<void> {}
+  async delete(id: number): Promise<void> {
+    await this.ormRepository.delete(id);
+  }
 }

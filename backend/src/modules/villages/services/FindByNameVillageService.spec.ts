@@ -1,14 +1,14 @@
 import { FakeVillageRepositories } from "../repositories/fakes/FakeVillageRepository";
-import { FindVillageServiceById } from "./FindVillageServicesById";
+import { FindVillageServiceByName } from "./FindByNameVillageService";
 
 describe('teste do FindVillageServiceByName', () => {
     it('buscar vila por nome', async () => {
         const fakeVillageRepository = new FakeVillageRepositories();
-        const findVillageService = new FindVillageServiceById(fakeVillageRepository)
+        const findVillageService = new FindVillageServiceByName(fakeVillageRepository)
 
-        const villageFound = await findVillageService.execute(5);
+        const villageFound = await findVillageService.execute('folha');
         if (villageFound) {
-        expect(villageFound.name).toBe('folha')
+        expect(villageFound.id).toBe(5)
         }
 
     })

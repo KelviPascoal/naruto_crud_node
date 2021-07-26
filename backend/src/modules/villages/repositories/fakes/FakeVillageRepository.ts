@@ -21,7 +21,7 @@ private fakeVillages: Village[] = []
 
   async create({ name, country }: IRequestCreateVillage): Promise<Village> {
     const village = new Village();
-    Object.assign(village, { name, country, id: 1 });
+    Object.assign(village, { name, country, id: 1, created_at: 2021-7-23-20, updated_at: 2021-7-23-20 });
     this.fakeVillages.push(village);
     return village;
   }

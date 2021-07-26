@@ -6,22 +6,20 @@ describe('teste do FindVillageServiceByName', () => {
     it('buscar vila por id', async () => {
         const fakeVillageRepository = new FakeVillageRepositories();
         const findVillageService = new FindVillageServiceById(fakeVillageRepository)
-        const createVillageService = new CreateVillageService(
-            fakeVillageRepository
-          );
+        const createVillageService = new CreateVillageService(fakeVillageRepository);
       
           await createVillageService.execute({
             name: "ES",
             country: "Brasil",
           });
-
-
         const villageFound = await findVillageService.execute(1);
+        expect(villageFound.name).toBe("ES")
+    })
 
+    it('falha ao tentar buscar uma vila que não existe, por id', async () => {
+        const fakeVillageRepository = new FakeVillageRepositories();
+        const findVillageService = new FindVillageServiceById(fakeVillageRepository)
 
-        if (villageFound) {
-        expect(villageFound.name).toBe('folha')
-        }
-
+        expect(findVillageService.execute(1)).rejects.toBeInstanceOf(Error)
     })
 });

@@ -8,7 +8,7 @@ describe('teste do FindVillageServiceByName', () => {
 
         const villageFound = await findVillageService.execute('folha');
         if (villageFound) {
-        expect(villageFound.id).toBe(5)
+        expect(villageFound.id).toBe(1)
         }
 
     })

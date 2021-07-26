@@ -49,10 +49,14 @@ villageRoutes.put("/", async (req, res) => {
   }
 });
 
-villageRoutes.delete("/", async (req, res) => {
-  const villageService = new DeleteVillageService();
-  const id = req.body.id;
+villageRoutes.delete("/:id", async (req, res) => {
+  try {
+  const villageService = container.resolve(DeleteVillageService);
+  const idString = req.params.id;
+  const id = Number(idString)
   await villageService.execute(id);
-
   return res.status(204).json({ message: "vila deletada." });
+  } catch(err) {
+    res.status(400).json({error: err.message})
+  }
 });

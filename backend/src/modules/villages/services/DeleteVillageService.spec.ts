@@ -19,12 +19,12 @@ describe('teste do DeleteVillageServices', () => {
         expect(VillageDeleted).toBe(undefined)
 
     })
-    it('fala ao tentar deletar uma vila nao existenten', async () => {
+    it('falha ao tentar deletar uma vila nao existenten', async () => {
 
         const fakeVillageRepository = new FakeVillageRepositories();
         const deleteVillageServices = new DeleteVillageService(fakeVillageRepository);
         expect(await deleteVillageServices.execute(1)
-        ).toBeInstanceOf(Error)
+        ).rejects.toBeInstanceOf(Error)
 
 });
 });

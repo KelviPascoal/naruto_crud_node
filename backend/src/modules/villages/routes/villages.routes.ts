@@ -1,8 +1,7 @@
 import { Router } from "express";
-import { container } from "tsyringe";
 import { CreateVillageController } from "../Controllers/CreateVillageController";
+import { DeleteVillageController } from "../Controllers/DeleteVillageController";
 import { FindVillageController } from "../Controllers/FindVillageController";
-import { DeleteVillageService } from "../services/DeleteVillageService";
 import { UpdateVillageService } from "../services/UpdateVillageService";
 
 interface IRequest {
@@ -13,18 +12,18 @@ interface IRequest {
 export const villageRoutes = Router();
 
 villageRoutes.get("/", async (req, res) => {
-try {
-  const { name, id }: IRequest = req.query;
+  try {
+    const { name, id }: IRequest = req.query;
 
-  const findVillageController = new FindVillageController();
-  const villageOrVillagesFound = await findVillageController.execute({
-    name,
-    id: Number(id),
-  });
-  return res.status(200).json(villageOrVillagesFound);
-} catch(err) {
-  return res.status(400).json({message: err.messae})
-}
+    const findVillageController = new FindVillageController();
+    const villageOrVillagesFound = await findVillageController.execute({
+      name,
+      id: Number(id),
+    });
+    return res.status(200).json(villageOrVillagesFound);
+  } catch (err) {
+    return res.status(400).json({ message: err.messae });
+  }
 });
 
 villageRoutes.post("/", async (req, res) => {
@@ -51,12 +50,12 @@ villageRoutes.put("/", async (req, res) => {
 
 villageRoutes.delete("/:id", async (req, res) => {
   try {
-  const villageService = container.resolve(DeleteVillageService);
-  const idString = req.params.id;
-  const id = Number(idString)
-  await villageService.execute(id);
-  return res.status(204).json({ message: "vila deletada." });
-  } catch(err) {
-    res.status(400).json({error: err.message})
+    const idString = req.params.id;
+    const id = Number(idString);
+    const deleteVillageController = new DeleteVillageController();
+    await deleteVillageController.execute(id);
+    return res.status(204).json({ message: "vila deletada." });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });

@@ -15,8 +15,10 @@ private fakeVillages: Village[] = []
     const villagesFound: Village[] =  this.fakeVillages.sort()
     return villagesFound;
   }
-  update(data: IRequestCreateVillage): Promise<Village | undefined> {
-    throw new Error("Method not implemented.");
+  async update(village: Village): Promise<Village | undefined> {
+    this.fakeVillages.push(village);
+    return village;
+
   }
 
   async create({ name, country }: IRequestCreateVillage): Promise<Village> {

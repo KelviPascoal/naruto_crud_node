@@ -2,7 +2,8 @@ import { Router } from "express";
 import { CreateVillageController } from "../Controllers/CreateVillageController";
 import { DeleteVillageController } from "../Controllers/DeleteVillageController";
 import { FindVillageController } from "../Controllers/FindVillageController";
-import { UpdateVillageService } from "../services/UpdateVillageService";
+import { UpdateVillageController } from "../Controllers/UpdateVillageController";
+import { IRequestUpdateVillage } from "../types/IRequestUpdateVillage";
 
 interface IRequest {
   id?: string;
@@ -39,9 +40,9 @@ villageRoutes.post("/", async (req, res) => {
 
 villageRoutes.put("/", async (req, res) => {
   try {
-    const villageService = new UpdateVillageService();
-    const { name, country, id } = req.body;
-    const villageUpdated = await villageService.execute({ name, country, id });
+    const updateVillageController = new UpdateVillageController();
+    const { name, country, id }: IRequestUpdateVillage = req.body;
+    const villageUpdated = await updateVillageController.execute({ name, country, id });
     return res.status(200).json(villageUpdated);
   } catch (err) {
     return res.status(400).json(err.message);

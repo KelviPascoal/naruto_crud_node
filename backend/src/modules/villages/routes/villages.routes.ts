@@ -38,10 +38,11 @@ villageRoutes.post("/", async (req, res) => {
   }
 });
 
-villageRoutes.put("/", async (req, res) => {
+villageRoutes.put("/:id", async (req, res) => {
   try {
     const updateVillageController = new UpdateVillageController();
-    const { name, country, id }: IRequestUpdateVillage = req.body;
+    const { name, country}: IRequestUpdateVillage = req.body;
+    const id = Number(req.params.id)
     const villageUpdated = await updateVillageController.execute({ name, country, id });
     return res.status(200).json(villageUpdated);
   } catch (err) {

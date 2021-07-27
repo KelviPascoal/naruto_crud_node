@@ -13,7 +13,7 @@ export class UpdateVillageService {
 
     async execute({village, dataUpdate}: IRequestUpdateVillageByService): Promise<Village | undefined> {
         village.name = dataUpdate.name;
-        village.country = dataUpdate.country;
+        village.country = dataUpdate.country
 
         const villageUpdated = await this.villageRepository.update(village);
 

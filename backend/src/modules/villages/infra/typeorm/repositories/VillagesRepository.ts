@@ -1,4 +1,5 @@
 import { IVillagesRepository } from "@modules/villages/repositories/IVillagesRepository";
+import { IRequestUpdateVillageByRepository } from "@modules/villages/types/IRequestUpdateVillage";
 import { getRepository, Repository } from "typeorm";
 import { IRequestCreateVillage } from "../../../types/IRequestCreateVillage";
 import { Village } from "../models/Village";
@@ -18,8 +19,12 @@ export class VillagesRepository implements IVillagesRepository {
     const villages = await this.ormRepository.find();
     return villages;
   }
-  update(data: IRequestCreateVillage): Promise<Village | undefined> {
-    throw new Error("Method not implemented.");
+  async update(village: Village): Promise<Village | undefined> {
+    const villageUpdated = await this.ormRepository.save(village)
+    if (!villageUpdated) {
+      throw new Error('falha de execução')
+    }
+    return villageUpdated;
   }
   async create({ name, country }: IRequestCreateVillage): Promise<Village> {
     const villageCreated = this.ormRepository.create({name, country});

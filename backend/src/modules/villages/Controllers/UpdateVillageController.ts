@@ -1,12 +1,12 @@
 import { container } from 'tsyringe'
 import { Village } from '../infra/typeorm/models/Village'
-import { CreateVillageService } from '../services/CreateVillageService'
 import { FindVillageServiceById } from '../services/FindByIDVillageService'
+import { UpdateVillageService } from '../services/UpdateVillageService'
 import { IRequestUpdateVillage } from '../types/IRequestUpdateVillage'
 
 export class UpdateVillageController {
     async execute({name, country, id}: IRequestUpdateVillage): Promise<Village | undefined> {
-        const createVillageService = container.resolve(CreateVillageService)
+        const updateVillageService = container.resolve(UpdateVillageService)
         const findByIdVillageService = container.resolve(FindVillageServiceById)
         const checkIfVillageExist = await findByIdVillageService.execute(id)
 
@@ -17,7 +17,7 @@ export class UpdateVillageController {
         if (!name || !country) {
             throw new Error('preencha todos os campos corretamente.')
         }
-        const villageCreated = await createVillageService.execute({name, country})
+        const villageCreated = await updateVillageService.execute({village: checkIfVillageExist, dataUpdate: {name, country, id}})
         return villageCreated;
     }
 }

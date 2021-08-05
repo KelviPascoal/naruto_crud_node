@@ -10,15 +10,20 @@ export class VillagesRepository implements IVillagesRepository {
   constructor() {
     this.ormRepository = getRepository(Village);
   }
-  async findById(id: number): Promise<Village | undefined> {
-    const villageFound = await this.ormRepository.findOne({where: {id: id}});
-    return villageFound;
-  }
-
   async find(): Promise<Village[] | undefined> {
     const villages = await this.ormRepository.find();
     return villages;
   }
+
+  async findOneById(id: number): Promise<Village | undefined> {
+    const villageFound = await this.ormRepository.findOne({where: {id: id}});
+    return villageFound;
+  }
+  async findByName(name: string): Promise<Village | undefined> {
+    const villageFound = await this.ormRepository.findOne({where: {name: name}});
+    return villageFound;
+  }
+
   async update(village: Village): Promise<Village | undefined> {
     const villageUpdated = await this.ormRepository.save(village)
     if (!villageUpdated) {
@@ -33,10 +38,6 @@ export class VillagesRepository implements IVillagesRepository {
     return villageCreated;
   }
 
-  async findByName(name: string): Promise<Village | undefined> {
-    const villageFound = await this.ormRepository.findOne({where: {name: name}});
-    return villageFound;
-  }
 
   async delete(id: number): Promise<void> {
     await this.ormRepository.delete(id);

@@ -11,11 +11,17 @@ export class UpdateVillageService {
         private villageRepository: IVillagesRepository,
     ) {}
 
-    async execute({village, dataUpdate}: IRequestUpdateVillageByService): Promise<Village | undefined> {
-        village.name = dataUpdate.name;
-        village.country = dataUpdate.country
+    async execute(dataUpdate: IRequestUpdateVillageByService): Promise<Village | undefined> {
+        const villageExist = await this.villageRepository.findOneById(dataUpdate.id)
 
-        const villageUpdated = await this.villageRepository.update(village);
+        if (!villageExist) {
+            throw new Error('villa does not exists')
+        }
+        
+        villageExist.name = dataUpdate.name;
+        villageExist.country = dataUpdate.country
+
+        const villageUpdated = await this.villageRepository.update(villageExist);
 
         return villageUpdated;
 }

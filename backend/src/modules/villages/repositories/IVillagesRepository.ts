@@ -5,7 +5,7 @@ import { IRequestUpdateVillageByRepository } from "../types/IRequestUpdateVillag
 export interface IVillagesRepository {
     create(data: IRequestCreateVillage): Promise<Village | undefined>
     find(): Promise<Village[] | undefined>
-    findById(id: number): Promise<Village | undefined>
+    findOneById(id: number): Promise<Village | undefined>
     findByName(name: string): Promise<Village | undefined>
     update(village: Village): Promise<Village | undefined>
     delete(id: number): Promise<void>

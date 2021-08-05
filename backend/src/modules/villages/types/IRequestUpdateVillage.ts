@@ -7,13 +7,10 @@ export interface IRequestUpdateVillage {
 }
 
 export interface IRequestUpdateVillageByService {
-  village: Village;
-  dataUpdate: {
     id: number;
     name: string;
     country: string;
   };
-}
 
 export interface IRequestUpdateVillageByRepository {
   existingVillage: Village;

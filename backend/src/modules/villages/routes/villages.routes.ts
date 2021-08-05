@@ -1,63 +1,16 @@
 import { Router } from "express";
-import { CreateVillageController } from "../Controllers/CreateVillageController";
-import { DeleteVillageController } from "../Controllers/DeleteVillageController";
-import { FindVillageController } from "../Controllers/FindVillageController";
-import { UpdateVillageController } from "../Controllers/UpdateVillageController";
-import { IRequestUpdateVillage } from "../types/IRequestUpdateVillage";
+import { VillageController } from "../Controllers/VillageController";
 
-interface IRequest {
-  id?: string;
-  name?: string;
-}
+
+const villageController =  new VillageController()
 
 export const villageRoutes = Router();
 
-villageRoutes.get("/", async (req, res) => {
-  try {
-    const { name, id }: IRequest = req.query;
+villageRoutes.get("/", villageController.find);
 
-    const findVillageController = new FindVillageController();
-    const villageOrVillagesFound = await findVillageController.execute({
-      name,
-      id: Number(id),
-    });
-    return res.status(200).json(villageOrVillagesFound);
-  } catch (err) {
-    return res.status(400).json({ message: err.messae });
-  }
-});
+villageRoutes.post("/", villageController.create) 
 
-villageRoutes.post("/", async (req, res) => {
-  try {
-    const createVillageController =  new CreateVillageController()
-    const {name, country} = req.body;
-    const villageCreated = await createVillageController.execute({name, country}) 
-    return res.status(200).json(villageCreated);
-  } catch (err) {
-    return res.status(400).json(err.message);
-  }
-});
+villageRoutes.put("/:id", villageController.update)
 
-villageRoutes.put("/:id", async (req, res) => {
-  try {
-    const updateVillageController = new UpdateVillageController();
-    const { name, country}: IRequestUpdateVillage = req.body;
-    const id = Number(req.params.id)
-    const villageUpdated = await updateVillageController.execute({ name, country, id });
-    return res.status(200).json(villageUpdated);
-  } catch (err) {
-    return res.status(400).json(err.message);
-  }
-});
+villageRoutes.delete("/:id", villageController.delete)
 
-villageRoutes.delete("/:id", async (req, res) => {
-  try {
-    const idString = req.params.id;
-    const id = Number(idString);
-    const deleteVillageController = new DeleteVillageController();
-    await deleteVillageController.execute(id);
-    return res.status(204).json({ message: "vila deletada." });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});

@@ -1,6 +1,4 @@
 import { inject, injectable } from "tsyringe";
-import { getRepository } from "typeorm";
-import { Village } from "../infra/typeorm/models/Village";
 import { IVillagesRepository } from "../repositories/IVillagesRepository";
 
 @injectable()
@@ -12,7 +10,7 @@ export class DeleteVillageService {
     ) {}
 
     async execute(id: number): Promise<void> {
-        const villageFound = await this.villageRepository.findById(id);
+        const villageFound = await this.villageRepository.findOneById(id);
         if (!villageFound) {
             throw new Error('A vila a qual tentou deletar não existe.')
         }

@@ -1,27 +1,28 @@
-import { getRepository } from "typeorm";
+import { inject, injectable } from "tsyringe";
 import { Village } from "../infra/typeorm/models/Village";
+import { IVillagesRepository } from "../repositories/IVillagesRepository";
+import { IRequestUpdateVillageByService } from "../types/IRequestUpdateVillage";
 
-interface Request {
-    id: number;
-    name: string;
-    country: string;
-}
 
+@injectable()
 export class UpdateVillageService {
-    async execute({id, name, country}: Request): Promise<Village> {
-        const villageRepository = getRepository(Village);
+    constructor(
+        @inject('VillagesRepository')
+        private villageRepository: IVillagesRepository,
+    ) {}
 
-        const villageExist = await villageRepository.findOne(id);
-        
-        if(!villageExist) {
-            throw new Error('this village not exist.')
+    async execute(dataUpdate: IRequestUpdateVillageByService): Promise<Village | undefined> {
+        const villageExist = await this.villageRepository.findOneById(dataUpdate.id)
+
+        if (!villageExist) {
+            throw new Error('villa does not exists')
         }
-    
-        villageExist.name = name;
-        villageExist.country = country;
-    
-        const villageUpdated = await villageRepository.save(villageExist);
+        
+        villageExist.name = dataUpdate.name;
+        villageExist.country = dataUpdate.country
+
+        const villageUpdated = await this.villageRepository.update(villageExist);
 
         return villageUpdated;
-    }
+}
 }

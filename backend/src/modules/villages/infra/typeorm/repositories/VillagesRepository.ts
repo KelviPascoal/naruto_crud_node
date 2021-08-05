@@ -1,4 +1,5 @@
 import { IVillagesRepository } from "@modules/villages/repositories/IVillagesRepository";
+import { IRequestUpdateVillageByRepository } from "@modules/villages/types/IRequestUpdateVillage";
 import { getRepository, Repository } from "typeorm";
 import { IRequestCreateVillage } from "../../../types/IRequestCreateVillage";
 import { Village } from "../models/Village";
@@ -9,17 +10,26 @@ export class VillagesRepository implements IVillagesRepository {
   constructor() {
     this.ormRepository = getRepository(Village);
   }
-  async findById(id: number): Promise<Village | undefined> {
-    const villageFound = await this.ormRepository.findOne({where: {id: id}});
-    return villageFound;
-  }
-
   async find(): Promise<Village[] | undefined> {
     const villages = await this.ormRepository.find();
     return villages;
   }
-  update(data: IRequestCreateVillage): Promise<Village | undefined> {
-    throw new Error("Method not implemented.");
+
+  async findOneById(id: number): Promise<Village | undefined> {
+    const villageFound = await this.ormRepository.findOne({where: {id: id}});
+    return villageFound;
+  }
+  async findByName(name: string): Promise<Village | undefined> {
+    const villageFound = await this.ormRepository.findOne({where: {name: name}});
+    return villageFound;
+  }
+
+  async update(village: Village): Promise<Village | undefined> {
+    const villageUpdated = await this.ormRepository.save(village)
+    if (!villageUpdated) {
+      throw new Error('falha de execução')
+    }
+    return villageUpdated;
   }
   async create({ name, country }: IRequestCreateVillage): Promise<Village> {
     const villageCreated = this.ormRepository.create({name, country});
@@ -28,10 +38,6 @@ export class VillagesRepository implements IVillagesRepository {
     return villageCreated;
   }
 
-  async findByName(name: string): Promise<Village | undefined> {
-    const villageFound = await this.ormRepository.findOne({where: {name: name}});
-    return villageFound;
-  }
 
   async delete(id: number): Promise<void> {
     await this.ormRepository.delete(id);

@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IVillagesRepository } from "../repositories/IVillagesRepository";
+import { IVillagesRepository } from "../../repositories/IVillagesRepository";
 
 @injectable()
 export class DeleteVillageService {

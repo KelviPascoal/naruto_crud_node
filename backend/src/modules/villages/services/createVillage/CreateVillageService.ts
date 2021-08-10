@@ -1,6 +1,6 @@
-import { Village } from "../infra/typeorm/models/Village";
-import { IVillagesRepository } from "../repositories/IVillagesRepository";
-import { IRequestCreateVillage } from "../types/IRequestCreateVillage";
+import { Village } from "../../infra/typeorm/models/Village";
+import { IVillagesRepository } from "../../repositories/IVillagesRepository";
+import { IRequestCreateVillage } from "../../types/IRequestCreateVillage";
 import { inject, injectable} from 'tsyringe'
 
 @injectable()

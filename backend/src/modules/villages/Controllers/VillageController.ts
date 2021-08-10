@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreateVillageService } from "../services/CreateVillageService";
-import { DeleteVillageService } from "../services/DeleteVillageService";
-import { FindVillageService } from "../services/FindVillageServices";
-import { UpdateVillageService } from "../services/UpdateVillageService";
+import { CreateVillageService } from "../services/createVillage/CreateVillageService";
+import { DeleteVillageService } from "../services/deleteVillage/DeleteVillageService";
+import { FindVillageService } from "../services/findAllVillage/FindVillageServices";
+import { FindByIdVillageService } from "../services/findByIdVillage/FindVillageServices";
+import { FindByNameVillageService } from "../services/findByNameVillage/FindVillageServices";
+import { UpdateVillageService } from "../services/updateVillage/UpdateVillageService";
 
 
 export class VillageController {
@@ -24,13 +26,29 @@ export class VillageController {
   async find(req: Request, res: Response) {
     try {
       const findVillageService = container.resolve(FindVillageService);
-      // const { name, id }: IRequest = req.query;
-      // console.log(req.query);
-      const villages = await findVillageService.execute({
-        // name: String(name),
-        // id: Number(id),
-      });
+      const villages = await findVillageService.execute();
+      return res.status(200).json(villages);
+    } catch (err) {
+      return res.status(400).json({ message: err.messae });
+    }
+  }
 
+  async findById(req: Request, res: Response) {
+    try {
+      const findVillageService = container.resolve(FindByIdVillageService);
+      const id = Number(req.params.id);
+      const villages = await findVillageService.execute(id);
+      return res.status(200).json(villages);
+    } catch (err) {
+      return res.status(400).json({ message: err.messae });
+    }
+  }
+
+  async findByName(req: Request, res: Response) {
+    try {
+      const findVillageService = container.resolve(FindByNameVillageService);
+      const name = String(req.params.name);
+      const villages = await findVillageService.execute(name);
       return res.status(200).json(villages);
     } catch (err) {
       return res.status(400).json({ message: err.messae });

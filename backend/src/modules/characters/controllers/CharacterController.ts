@@ -4,7 +4,7 @@ import { Character } from "../infra/typeorm/models/Character";
 import CreateCharacterServices from "../services/CreateCharacterServices";
 import { UpdateCharacterService } from "../services/UpdateCharacterService";
 
-export class charactersRouter {
+export class CharactersController {
 async findAll(request: Request, response: Response)  {
   const characterRepository = getRepository(Character);
   const character = await characterRepository.find();
@@ -36,11 +36,10 @@ async update(request: Request, response: Response)  {
 };
 
 async delete(request: Request, response: Response)  {
-
   const characterRepository = getRepository(Character);
-  const { id } = request.body;
+  const { id } = request.params;
   await characterRepository.delete(id);
   
-  return response.status(204);
+  return response.status(204).json({message: 'character deleted'});
 };
 }

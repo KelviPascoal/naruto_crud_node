@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { Village } from "../infra/typeorm/models/Village";
-import { IVillagesRepository } from "../repositories/IVillagesRepository";
-import { IRequestUpdateVillageByService } from "../types/IRequestUpdateVillage";
+import { Village } from "../../infra/typeorm/models/Village";
+import { IVillagesRepository } from "../../repositories/IVillagesRepository";
+import { IRequestUpdateVillageByService } from "../../types/IRequestUpdateVillage";
 
 
 @injectable()

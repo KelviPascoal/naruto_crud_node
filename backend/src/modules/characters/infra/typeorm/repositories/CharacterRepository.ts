@@ -31,10 +31,8 @@ export class CharacterRepository {
       async create( name: string, village_id: number ): Promise<Character> {
         const characterCreated = this.ormRepository.create({name, village_id, });
         await this.ormRepository.save(characterCreated);
-    
         return characterCreated;
       }
-    
     
       async delete(id: number): Promise<void> {
         await this.ormRepository.delete(id);

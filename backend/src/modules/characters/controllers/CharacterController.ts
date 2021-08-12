@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
 import { getRepository } from "typeorm";
 import { Character } from "../infra/typeorm/models/Character";
 import CreateCharacterServices from "../services/CreateCharacterServices";
+import { FindAllCharacterService } from "../services/FindAllCharacterService/FindAllCharacterService";
 import { UpdateCharacterService } from "../services/UpdateCharacterService";
 
 export class CharactersController {
 async findAll(request: Request, response: Response)  {
-  const characterRepository = getRepository(Character);
-  const character = await characterRepository.find();
+  const characterServices = container.resolve(FindAllCharacterService);
+  const character = await characterServices.execute();
   response.status(200).json(character);
 };
 

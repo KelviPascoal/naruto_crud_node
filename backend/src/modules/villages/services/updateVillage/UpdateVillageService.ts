@@ -1,3 +1,4 @@
+import { AppError } from "../../../../shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Village } from "../../infra/typeorm/models/Village";
 import { IVillagesRepository } from "../../repositories/IVillagesRepository";
@@ -15,7 +16,7 @@ export class UpdateVillageService {
         const villageExist = await this.villageRepository.findOneById(dataUpdate.id)
 
         if (!villageExist) {
-            throw new Error('villa does not exists')
+            throw new AppError('villa does not exists', 401)
         }
         
         villageExist.name = dataUpdate.name;

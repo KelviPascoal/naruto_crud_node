@@ -1,3 +1,4 @@
+import { AppError } from "../../../../shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Village } from "../../infra/typeorm/models/Village";
 import { IVillagesRepository } from "../../repositories/IVillagesRepository";
@@ -12,7 +13,7 @@ export class FindVillageService {
   async execute(): Promise<Village[] | Village | undefined> {
         const villages = await this.villageRepository.find();
         if (!villages) {
-          throw new Error('nenhuma vila foi cadastrada');
+          throw new AppError('nenhuma vila foi cadastrada', 401);
         }
         return villages;
   }

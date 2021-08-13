@@ -1,3 +1,4 @@
+import { AppError } from "../../../../shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { IVillagesRepository } from "../../repositories/IVillagesRepository";
 
@@ -12,7 +13,7 @@ export class DeleteVillageService {
     async execute(id: number): Promise<void> {
         const villageFound = await this.villageRepository.findOneById(id);
         if (!villageFound) {
-            throw new Error('A vila a qual tentou deletar não existe.')
+            throw new AppError('A vila a qual tentou deletar não existe.', 401)
         }
         await this.villageRepository.delete(id)
     }

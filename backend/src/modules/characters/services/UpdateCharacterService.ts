@@ -1,3 +1,4 @@
+import { AppError } from "../../../shared/errors/AppError";
 import { getRepository } from "typeorm";
 import { Character } from "../infra/typeorm/models/Character";
 
@@ -13,7 +14,7 @@ export class UpdateCharacterService {
     const characterExist = await characterRepository.findOne({where: { id : id}});
     
     if (!characterExist) {
-        throw new Error();
+        throw new AppError('user not exist.', 401);
     }
     characterExist.name = name;
     characterExist.village_id = village_id;

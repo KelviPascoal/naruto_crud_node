@@ -3,7 +3,7 @@
     "resolveJsonModule": true,
     "target": "es5",                               
     "module": "commonjs",                           
-   
+
     "strict": true,                                 
     "strictPropertyInitialization": false,       
     "baseUrl": "./src",
@@ -17,6 +17,6 @@
     "emitDecoratorMetadata": true,              
 
     "skipLibCheck": true,                          
-    "forceConsistentCasingInFileNames": true       
+    "forceConsistentCasingInFileNames": true     
   }
 }

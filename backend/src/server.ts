@@ -2,9 +2,9 @@ import express, { NextFunction, Request, Response } from "express";
 import 'express-async-errors'
 import "reflect-metadata";
 import { routes } from "./shared/http/routes";
-import "./shared/infra/typeorm/database";
-import "./shared/container";
-import { AppError } from "./shared/errors/AppError";
+import "@shared/infra/typeorm/database";
+import "@shared/container";
+import { AppError } from "@shared/errors/AppError";
 
 const app = express();
 const PORT = 3333;
